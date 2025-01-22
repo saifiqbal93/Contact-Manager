@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+<head>
+    <title data-th-text="${loggedInUser.name}+' |  Dashboard'">
+        Profile Page
+    </title>
+</head>
+<body>
+<div id="content">
+    <!-- sidebar -->
+
+    <!-- user is logged in : sidebar -->
+
+    <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+    </div>
+
+    <div class="sm:pl-64 pt-20" style="height: 1000px">
+        <div class="grid grid-cols-12">
+            <div class="col-span-3"></div>
+            <div class="col-span-12 md:col-span-6">
+                <div
+                        class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <!-- message here -->
+
+
+                <h5
+                        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                >
+                    Update Profile
+                </h5>
+
+
+                <!-- this is  form -->
+                <form
+                        data-th-action="@{'/user/profile/update'}"
+                        method="post"
+                        data-th-object="${userForm}"
+                        class="mt-5"
+                        enctype="multipart/form-data"
+                        novalidate
+                >
+                    <!-- name  -->
+                    <div class="mb-3">
+                        <label
+                                for="updateName"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Name</label
+                        >
+                        <input
+                                type="text"
+                                id="updateName"
+                                data-th-field="*{updateName}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Enter here"
+                                required
+                        />
+
+                        <p
+                                data-th-if="${#fields.hasErrors('updateName')}"
+                                data-th-errors="*{updateName}"
+                                class="text-red-600 px-1 py-2"
+                        >
+                            Name is required
+                        </p>
+                    </div>
+
+                    <!-- Phone field -->
+                    <div class="mb-3">
+                        <label
+                                for="updatePhoneNumber"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Contact Number</label
+                        >
+                        <input
+                                data-th-field="*{updatePhoneNumber}"
+                                type="text"
+                                id="updatePhoneNumber"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                required
+                        />
+
+                        <p
+                                data-th-if="${#fields.hasErrors('updatePhoneNumber')}"
+                                data-th-errors="*{updatePhoneNumber}"
+                                class="text-red-600 px-1 py-2"
+                        ></p>
+                    </div>
+
+                    <!-- about textarea -->
+                    <div class="mb-3">
+                        <label
+                                for="updateAbout"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Write something about yourself</label
+                        >
+                        <textarea
+                                data-th-field="*{updateAbout}"
+                                id="updateAbout"
+                                rows="6"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Write here..."
+                        ></textarea>
+
+                        <p
+                                data-th-if="${#fields.hasErrors('updateAbout')}"
+                                data-th-errors="*{updateAbout}"
+                                class="text-red-600 px-1 py-2"
+                        ></p>
+                    </div>
+                    <!-- contact image field -->
+                    <div class="mb-3">
+                        <label
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                for="image_file_input"
+                        >Profile Image</label
+                        >
+                        <input
+                                id="image_file_input"
+                                class="block w-full mb-2 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                data-th-field="*{updateProfileImage}"
+                                type="file"
+                        />
+
+                        <p
+                                class="text-red-500"
+                                data-th-if="${#fields.hasErrors('updateProfileImage')}"
+                                data-th-errors="*{updateProfileImage}"
+                        >
+                            Invalid Image
+                        </p>
+
+                        <img
+                                data-th-src="*{updateProfilePic}"
+                                class="max-h-52 mx-auto rounded-lg shadow m-3"
+                                id="upload_image_preview"
+                                alt=""
+                        />
+                    </div>
+                    <!-- button -->
+                    <div class="mb-3 flex justify-center space-x-3">
+                        <button
+                                type="submit"
+                                class="px-3 py-2 rounded bg-gray-800 hover:bg-gray text-white dark:bg-blue-800 dark:hover:bg-blue-800"
+                        >
+                            Save
+                        </button>
+                        <button
+                                type="reset"
+                                class="px-3 py-2 rounded bg-orange-800 hover:bg-orange text-white dark:bg-orange-800 dark:hover:bg-orange-800"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<script data-th-src="@{'/js/admin.js'}"></script>
+<script>
+    console.log("this is profile page");
+</script>
+</body>
+</html>

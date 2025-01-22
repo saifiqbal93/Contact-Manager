@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+<head>
+    <title>Feedback</title>
+</head>
+<body>
+<div id="content">
+    <!-- sidebar -->
+
+    <!-- user is logged in : sidebar -->
+
+    <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+    </div>
+
+    <div class="sm:pl-64 pt-20" style="height: 1000px">
+        <div class="flex items-center justify-center md:pt-32 flex-col">
+            <!--  profie card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl w-full">
+                <div class="flex flex-col items-center">
+                    <h2 class="text-2xl font-semibold mb-2 inline">Give Us Your Feedback</h2>
+
+                    <div data-th-replace="~{message :: messagebox}"></div>
+
+                    <div class="w-full mt-5">
+                    <form class="max-w-sm mx-auto" method="post" data-th-action="@{'/user/feedback'}">
+                        <div class="mb-5">
+                            <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
+                            <input type="text" required name="subject" id="subject" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
+                            <textarea id="message" name="message" required rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
+                        </div>
+                        <div class="button-container text-center mt-5">
+                            <button
+                                    type="submit"
+                                    class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white"
+                            >
+                                Send
+                            </button>
+                        </div>
+                    </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{'/js/profile.js'}"></script>
+<script>
+    console.log("this is profile page");
+</script>
+</body>
+</html>
